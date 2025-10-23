@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Garem House — Админ</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="dark admin">
+  <canvas id="bg-canvas" class="bg-canvas"></canvas>
+
+  <header class="site-header small">
+    <div class="logo-wrap">
+      <img id="logo-admin" src="images/logo.png" alt="Garem House" />
+    </div>
+  </header>
+
+  <main class="container admin-container">
+    <section id="login-section" class="card auth-card">
+      <h2>Вход в Админ-панель</h2>
+      <input id="password-input" type="password" placeholder="Пароль" />
+      <div class="row">
+        <button id="login-btn" class="btn">Войти</button>
+      </div>
+      <p class="muted">Доступ: <strong>Админ</strong> / <strong>Бармен</strong></p>
+    </section>
+
+    <section id="admin-section" class="admin-section hidden">
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="menu">Меню</button>
+        <button class="tab-btn" data-tab="staff">Персонал</button>
+        <button class="tab-btn" data-tab="settings">Настройки</button>
+      </div>
+
+      <div id="tab-menu" class="tab active card">
+        <h3>Категории меню</h3>
+        <div id="categories-list"></div>
+        <div class="form-row">
+          <input id="new-cat-name" placeholder="Название категории" />
+          <button id="add-cat" class="btn">Добавить категорию</button>
+        </div>
+        <h3>Позиции</h3>
+        <div id="items-list"></div>
+        <div class="form-row">
+          <select id="item-cat"></select>
+          <input id="item-name" placeholder="Название позиции" />
+          <input id="item-price" placeholder="Цена" />
+          <button id="add-item" class="btn">Добавить позицию</button>
+        </div>
+      </div>
+
+      <div id="tab-staff" class="tab card">
+        <h3>Персонал</h3>
+        <div id="staff-list"></div>
+        <div class="form-row">
+          <input id="staff-name" placeholder="Имя" />
+          <input id="staff-role" placeholder="Роль" />
+          <input id="staff-photo" placeholder="URL фото (или оставь пустым)" />
+          <button id="add-staff" class="btn">Добавить</button>
+        </div>
+      </div>
+
+      <div id="tab-settings" class="tab card">
+        <h3>Пароли</h3>
+        <div class="form-row">
+          <input id="admin-pass" placeholder="Пароль администратора" />
+          <button id="save-admin-pass" class="btn">Сохранить</button>
+        </div>
+        <div class="form-row">
+          <input id="barman-pass" placeholder="Пароль бармена" />
+          <button id="save-barman-pass" class="btn">Сохранить</button>
+        </div>
+        <p class="muted">Пароли хранятся в localStorage (локально). По умолчанию: <strong>admin123</strong> и <strong>bar123</strong>.</p>
+        <button id="logout" class="btn danger">Выйти</button>
+      </div>
+    </section>
+
+    <nav class="bottom-nav">
+      <a href="index.html" class="nav-btn">Меню</a>
+      <a href="staff.html" class="nav-btn">Персонал</a>
+    </nav>
+  </main>
+
+  <script src="js/background.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

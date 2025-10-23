@@ -1,0 +1,129 @@
+{
+  "Виски": [
+    {
+      "name": "Jameson",
+      "price": "600₽",
+      "active": true
+    },
+    {
+      "name": "Jack Daniel’s",
+      "price": "700₽",
+      "active": true
+    },
+    {
+      "name": "Chivas Regal 12",
+      "price": "850₽",
+      "active": true
+    },
+    {
+      "name": "Johnnie Walker Black",
+      "price": "900₽",
+      "active": true
+    }
+  ],
+  "Игристое вино": [
+    {
+      "name": "Prosecco DOC",
+      "price": "750₽",
+      "active": true
+    },
+    {
+      "name": "Martini Asti",
+      "price": "700₽",
+      "active": true
+    },
+    {
+      "name": "Moët & Chandon",
+      "price": "1600₽",
+      "active": true
+    }
+  ],
+  "Коктейли": [
+    {
+      "name": "Мохито",
+      "price": "500₽",
+      "active": true
+    },
+    {
+      "name": "Пина Колада",
+      "price": "550₽",
+      "active": true
+    },
+    {
+      "name": "Космополитен",
+      "price": "600₽",
+      "active": true
+    },
+    {
+      "name": "Маргарита",
+      "price": "550₽",
+      "active": true
+    },
+    {
+      "name": "От заката до рассвета",
+      "price": "650₽",
+      "active": true
+    }
+  ],
+  "Вино": [
+    {
+      "name": "Cabernet Sauvignon",
+      "price": "500₽",
+      "active": true
+    },
+    {
+      "name": "Merlot",
+      "price": "550₽",
+      "active": true
+    },
+    {
+      "name": "Chardonnay",
+      "price": "550₽",
+      "active": true
+    }
+  ],
+  "Пиво": [
+    {
+      "name": "Heineken",
+      "price": "400₽",
+      "active": true
+    },
+    {
+      "name": "Bud",
+      "price": "400₽",
+      "active": true
+    },
+    {
+      "name": "Hoegaarden",
+      "price": "450₽",
+      "active": true
+    },
+    {
+      "name": "Paulaner",
+      "price": "500₽",
+      "active": true
+    }
+  ],
+  "Безалкогольные напитки": [
+    {
+      "name": "Coca-Cola",
+      "price": "250₽",
+      "active": true
+    },
+    {
+      "name": "Red Bull",
+      "price": "350₽",
+      "active": true
+    },
+    {
+      "name": "Сок апельсиновый",
+      "price": "300₽",
+      "active": true
+    },
+    {
+      "name": "Минеральная вода",
+      "price": "200₽",
+      "active": true
+    }
+  ]
+}
