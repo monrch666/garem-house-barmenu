@@ -5,7 +5,7 @@ const DEFAULT_BARMAN = 'bar123';
 /* 🔗 Настройки jsonbin.io */
 const JSONBIN_MENU_ID = "68fb613843b1c97be97d0e0e";
 const JSONBIN_STAFF_ID = "68fb6260ae596e708f28cd6f";
-const JSONBIN_KEY = "$2a$10$HQYY3w.BcJi8JU5c0NLqwO62wAcuhZuI0qLhbHmZihtLotxlhQIvq";
+const JSONBIN_KEY = "$2a$10$iWaW8ZYQnb2ifBzumJgsVeUvO2gpzQ7cKnt0rm.BmMu8JKpy4aN7m";
 const JSONBIN_BASE = "https://api.jsonbin.io/v3/b/";
 
 /* ====== Авторизация ====== */
