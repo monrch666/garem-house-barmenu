@@ -154,31 +154,33 @@ document.getElementById('add-cat').addEventListener('click', async () => {
 function renderItems(menu) {
   const el = document.getElementById('items-list');
   const sel = document.getElementById('item-cat');
-  el.innerHTML = ''; sel.innerHTML = '';
+  el.innerHTML = '';
+  sel.innerHTML = '';
+
   Object.keys(menu).forEach((k, idx) => {
     const opt = document.createElement('option');
-    opt.value = k; opt.textContent = k; sel.appendChild(opt);
+    opt.value = k;
+    opt.textContent = k;
+    sel.appendChild(opt);
+
+    const catTitle = document.createElement('h3');
+    catTitle.textContent = k;
+    catTitle.style.marginTop = '15px';
+    el.appendChild(catTitle);
+
     menu[k].forEach((it, i2) => {
       const r = document.createElement('div');
       r.className = 'form-row';
-      r.innerHTML = `<input value="${it.name}">
-                     <input value="${it.price}">
-                     <label><input type="checkbox" ${it.active ? 'checked' : ''}> Видно</label>
-                     <button class="btn" data-k="${k}" data-i="${i2}">Сохранить</button>
-                     <button class="btn danger" data-del="${k}" data-i="${i2}">Удалить</button>`;
+      r.innerHTML = `
+        <input class="item-name" value="${escapeHtml(it.name)}" placeholder="Название">
+        <input class="item-price" value="${escapeHtml(it.price)}" placeholder="Цена">
+        <input class="item-photo" value="${escapeHtml(it.photo || '')}" placeholder="Ссылка на фото">
+        <label><input type="checkbox" class="item-active" ${it.active ? 'checked' : ''}> Видно</label>
+        <button class="btn danger" data-del="${k}" data-i="${i2}">Удалить</button>
+      `;
       el.appendChild(r);
 
-      r.querySelector('[data-k]').addEventListener('click', async (e) => {
-        const k = e.target.dataset.k, i = e.target.dataset.i;
-        const nm = r.querySelectorAll('input')[0].value.trim();
-        const pr = r.querySelectorAll('input')[1].value.trim();
-        const visible = r.querySelector('input[type=checkbox]').checked;
-        menu[k][i].name = nm; menu[k][i].price = pr; menu[k][i].active = visible;
-        localStorage.setItem('garem_menu', JSON.stringify(menu));
-        await saveJson(JSONBIN_MENU_ID, menu);
-        loadAll();
-      });
-
+      // удаление
       r.querySelector('[data-del]').addEventListener('click', async (e) => {
         if (!confirm('Удалить позицию?')) return;
         const k = e.target.dataset.del, i = e.target.dataset.i;
@@ -189,6 +191,50 @@ function renderItems(menu) {
       });
     });
   });
+
+  // === Общая кнопка сохранения всех изменений ===
+  const saveAllBtn = document.createElement('button');
+  saveAllBtn.textContent = '💾 Сохранить всё меню';
+  saveAllBtn.className = 'btn wide';
+  saveAllBtn.style.marginTop = '20px';
+  el.appendChild(saveAllBtn);
+
+  saveAllBtn.addEventListener('click', async () => {
+    // собрать все поля обратно в структуру menu
+    const catEls = document.querySelectorAll('#items-list h3');
+    const rows = document.querySelectorAll('#items-list .form-row');
+
+    let newMenu = {};
+    let currentCat = null;
+    let catIndex = 0;
+
+    catEls.forEach((catEl, catIdx) => {
+      const catName = catEl.textContent.trim();
+      newMenu[catName] = [];
+    });
+
+    // распределяем позиции по категориям
+    catEls.forEach((catEl, catIdx) => {
+      const nextCat = catEls[catIdx + 1];
+      const rowsInCat = [];
+      let node = catEl.nextElementSibling;
+      while (node && node !== nextCat) {
+        if (node.classList.contains('form-row')) rowsInCat.push(node);
+        node = node.nextElementSibling;
+      }
+      newMenu[catEl.textContent.trim()] = rowsInCat.map(r => ({
+        name: r.querySelector('.item-name').value.trim(),
+        price: r.querySelector('.item-price').value.trim(),
+        photo: r.querySelector('.item-photo').value.trim(),
+        active: r.querySelector('.item-active').checked
+      }));
+    });
+
+    localStorage.setItem('garem_menu', JSON.stringify(newMenu));
+    await saveJson(JSONBIN_MENU_ID, newMenu);
+    alert('✅ Меню успешно сохранено!');
+    loadAll();
+  });
 }
 
 document.getElementById('add-item').addEventListener('click', async () => {
@@ -197,7 +243,7 @@ document.getElementById('add-item').addEventListener('click', async () => {
   const price = document.getElementById('item-price').value.trim();
   if (!cat || !name) return alert('Заполните поля');
   const menu = JSON.parse(localStorage.getItem('garem_menu')) || {};
-  menu[cat].push({ id: 'i' + Date.now(), name, price, active: true });
+  menu[cat].push({ id: 'i' + Date.now(), name, price, photo: '', active: true });
   localStorage.setItem('garem_menu', JSON.stringify(menu));
   await saveJson(JSONBIN_MENU_ID, menu);
   loadAll();
