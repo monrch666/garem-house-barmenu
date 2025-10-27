@@ -35,10 +35,58 @@ body.dark{
 .cat-badge{font-size:13px;color:var(--muted)}
 .items{max-height:0;overflow:hidden;transition:max-height .35s ease,padding .25s ease}
 .items.open{padding:12px;max-height:800px}
-.item{display:flex;justify-content:space-between;padding:8px 6px;align-items:center;border-bottom:1px dashed rgba(255,255,255,0.02);}
-.item:last-child{border-bottom:0}
-.item .name{font-size:15px}
-.item .price{font-weight:700;color:var(--gold)}
+
+/* 🍸 Исправленное выравнивание названий и цен */
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 10px;
+  border-bottom: 1px dashed rgba(255,255,255,0.02);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.item:last-child {
+  border-bottom: 0;
+}
+
+.item:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.item .name {
+  flex: 1;
+  font-size: 15px;
+  text-align: left;
+  word-break: break-word;
+}
+
+.item .price {
+  flex-shrink: 0;
+  font-weight: 700;
+  color: var(--gold);
+  margin-left: 10px;
+  text-align: right;
+}
+
+/* 📸 Контейнер для фото */
+.photo-container {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-top: 6px;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+}
+
+.photo-container img {
+  width: 100%;
+  border-radius: 12px;
+  display: block;
+}
+
+/* 💼 Остальные элементы */
 .staff-swiper{height:420px;display:flex;align-items:center;justify-content:center;position:relative;margin-bottom:16px}
 .staff-card{width:320px;height:420px;border-radius:16px;overflow:hidden;position:absolute;touch-action:none;background:linear-gradient(180deg, rgba(0,0,0,0.45), rgba(0,0,0,0.25));box-shadow:0 14px 40px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.03);display:flex;flex-direction:column;align-items:center;padding:12px;}
 .staff-card img{width:100%;height:70%;object-fit:cover;border-radius:10px}
@@ -71,28 +119,10 @@ body.dark{
 .btn.wide:hover {
   background: #388e3c;
 }
-.item {
-  cursor: pointer;
-  transition: background 0.2s ease;
-  padding: 8px;
-  border-radius: 10px;
-}
 
-.item:hover {
-  background: rgba(255, 255, 255, 0.05);
+@media(max-width:640px){
+  .logo-wrap img{height:48px}
+  .staff-card{width:290px;height:380px}
+  .staff-swiper{height:380px}
+  .container{padding:0 12px 120px}
 }
-
-.photo-container {
-  width: 100%;
-  border-radius: 12px;
-  overflow: hidden;
-}
-
-.photo-container img {
-  width: 100%;
-  border-radius: 12px;
-  display: block;
-  margin-top: 5px;
-}
-
-@media(max-width:640px){.logo-wrap img{height:48px}.staff-card{width:290px;height:380px}.staff-swiper{height:380px}.container{padding:0 12px 120px}}
