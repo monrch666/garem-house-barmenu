@@ -284,25 +284,55 @@ body.dark{
   background: #388e3c;
 }
 
-/* ======= PHOTOS ======= */
-.photo-container {
+/* 🍸 Исправленное расположение напитков и фото */
+.item {
+  display: flex;
+  flex-direction: column;       /* теперь элементы идут сверху вниз */
+  align-items: flex-start;
+  justify-content: flex-start;
   width: 100%;
-  border-radius: 12px;
-  overflow: hidden;
+  padding: 12px;
+  border-bottom: 1px dashed rgba(255,255,255,0.05);
+  border-radius: 10px;
+  background: rgba(255,255,255,0.01);
+  transition: background 0.25s ease;
 }
 
-.photo-container img {
-  width: 100%;
-  border-radius: 12px;
-  display: block;
-  margin-top: 5px;
+.item:hover {
+  background: rgba(255,255,255,0.04);
 }
 
-@media(max-width:640px){
-  .logo-wrap img{height:48px}
-  .staff-card{width:290px;height:380px}
-  .staff-swiper{height:380px}
-  .container{padding:0 12px 120px}
-  .item .name{font-size:14px}
-  .item .price{font-size:14px}
+.item .name-price {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
+
+.item .name {
+  flex: 1;
+  font-size: 15px;
+  text-align: left;
+  word-break: break-word;
+  white-space: normal;
+  color: #fff;
+}
+
+.item .price {
+  flex-shrink: 0;
+  font-weight: 700;
+  color: var(--gold);
+  margin-left: 12px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* Фото теперь открывается снизу */
+.item img {
+  width: 100%;
+  margin-top: 8px;
+  border-radius: 8px;
+  object-fit: cover;
+  max-height: 180px;
+}
+
