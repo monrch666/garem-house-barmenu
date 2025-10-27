@@ -78,7 +78,7 @@ body.dark{
 .photo-container img {
   width: 100%;
   border-radius: 12px;
-  display: block;
+  display: flex;
   margin-top: 5px;
 }
 .btn.wide {
