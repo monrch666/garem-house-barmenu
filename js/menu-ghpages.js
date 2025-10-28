@@ -2,9 +2,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   const menuList = document.getElementById('menu-list');
 
   // === 🔧 Настройки JSONBin ===
-  const JSONBIN_ID = '68fb613843b1c97be97d0e0e'; 
-  const JSONBIN_KEY = '$2a$10$iWaW8ZYQnb2ifBzumJgsVeUvO2gpzQ7cKnt0rm.BmMu8JKpy4aN7m'; 
+  const JSONBIN_ID = '68fb613843b1c97be97d0e0e';
+  const JSONBIN_KEY = '$2a$10$iWaW8ZYQnb2ifBzumJgsVeUvO2gpzQ7cKnt0rm.BmMu8JKpy4aN7m';
 
+  // === Загрузка меню ===
   async function loadMenu() {
     try {
       const res = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_ID}/latest?nocache=${Date.now()}`, {
@@ -17,25 +18,28 @@ document.addEventListener('DOMContentLoaded', async () => {
       console.error('Ошибка загрузки меню с JSONBin:', e);
       return {
         "Коктейли": [
-          { "name": "Мохито", "price": "500₽", "photo": "https://via.placeholder.com/300x200?text=Mojito", "active": true },
-          { "name": "Пина Колада", "price": "550₽", "photo": "https://via.placeholder.com/300x200?text=Pina+Colada", "active": true }
+          { "name": "Мохито", "price": "500₽", "photo": "https://via.placeholder.com/400x300?text=Mojito", "active": true },
+          { "name": "Пина Колада", "price": "550₽", "photo": "https://via.placeholder.com/400x300?text=Pina+Colada", "active": true }
         ]
       };
     }
   }
 
+  // === Безопасное отображение текста ===
   function escapeHtml(s) {
     return (s + '').replace(/[&<>"']/g, c => ({
       '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
     }[c]));
   }
 
+  // === Рендер меню ===
   function renderMenu(menuData) {
     menuList.innerHTML = '';
     Object.entries(menuData).forEach(([catName, items]) => {
       const catEl = document.createElement('div');
       catEl.className = 'category card';
       const visibleCount = items.filter(i => i.active).length;
+
       catEl.innerHTML = `
         <div class="cat-head">
           <div>
@@ -47,15 +51,18 @@ document.addEventListener('DOMContentLoaded', async () => {
         <div class="items">
           ${items.map(i => i.active ? `
             <div class="item">
-              <div class="name">${escapeHtml(i.name)}</div>
-              <div class="price">${escapeHtml(i.price)}</div>
-              <div class="photo-container">
-                ${i.photo ? `<img src="${escapeHtml(i.photo)}" alt="${escapeHtml(i.name)}">` : ''}
+              <div class="top">
+                <div class="name">${escapeHtml(i.name)}</div>
+                <div class="price">${escapeHtml(i.price)}</div>
               </div>
+              ${i.photo ? `
+              <div class="photo-container">
+                <img src="${escapeHtml(i.photo)}" alt="${escapeHtml(i.name)}">
+              </div>` : ''}
             </div>` : '').join('')}
         </div>
       `;
-      
+
       const head = catEl.querySelector('.cat-head');
       const itemsDiv = catEl.querySelector('.items');
       head.addEventListener('click', () => {
@@ -69,27 +76,30 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
       });
 
-      // Анимация показа фото по клику на позицию
+      // === Фото по клику на позицию ===
       const itemEls = catEl.querySelectorAll('.item');
       itemEls.forEach(item => {
         const photo = item.querySelector('.photo-container');
-        if (!photo || !photo.innerHTML.trim()) return;
+        if (!photo) return;
+
         photo.style.maxHeight = '0';
         photo.style.overflow = 'hidden';
-        photo.style.transition = 'max-height 0.4s ease';
+        photo.style.transition = 'max-height 0.5s ease, opacity 0.5s ease, margin-top 0.3s ease';
+        photo.style.opacity = '0';
         photo.style.marginTop = '0';
 
         item.addEventListener('click', (e) => {
-          // Не сворачивать при клике на родительскую категорию
           e.stopPropagation();
           const open = photo.classList.contains('open');
           if (open) {
             photo.classList.remove('open');
             photo.style.maxHeight = '0';
+            photo.style.opacity = '0';
             photo.style.marginTop = '0';
           } else {
             photo.classList.add('open');
             photo.style.maxHeight = '300px';
+            photo.style.opacity = '1';
             photo.style.marginTop = '8px';
           }
         });
