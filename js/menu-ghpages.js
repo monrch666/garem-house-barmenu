@@ -44,7 +44,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         <div class="cat-head">
           <div>
             <div class="cat-title">${escapeHtml(catName)}</div>
-            <div class="cat-badge">${visibleCount} позиций</div>
           </div>
           <div class="chev">▸</div>
         </div>
