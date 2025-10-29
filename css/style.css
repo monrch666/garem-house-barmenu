@@ -59,28 +59,56 @@ body.dark{
 .btn{padding:8px 12px;border-radius:8px;border:0;background:linear-gradient(90deg,var(--accent),#7b1a1a);color:#fff;cursor:pointer}
 .btn.danger{background:#6b0b0b}
 .muted{color:var(--muted);font-size:13px;margin-top:8px}
+/* ==== Меню: структура и фото ==== */
 .item {
-  cursor: pointer;
-  transition: background 0.2s ease;
-  padding: 8px;
-  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  border-bottom: 1px dashed rgba(255,255,255,0.04);
+  padding: 10px 6px;
 }
 
-.item:hover {
-  background: rgba(255, 255, 255, 0.05);
+.item:last-child {
+  border-bottom: none;
+}
+
+.item .top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.item .name {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.item .price {
+  font-weight: 700;
+  color: var(--gold);
 }
 
 .photo-container {
   width: 100%;
-  border-radius: 12px;
+  margin-top: 8px;
+  text-align: center;
   overflow: hidden;
 }
 
 .photo-container img {
   width: 100%;
-  border-radius: 12px;
-  display: block;
-  margin-top: 5px;
+  max-height: 260px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+  opacity: 0;
+  transform: scale(0.98);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.photo-container.open img {
+  opacity: 1;
+  transform: scale(1);
 }
 .btn.wide {
   width: 100%;
