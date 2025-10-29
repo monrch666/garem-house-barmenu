@@ -1,4 +1,4 @@
-/* === Floating lights background using canvas === */
+/* === Garem House — Ambient Lights Background === */
 const canvas = document.getElementById('bg-canvas');
 
 function setupCanvas() {
@@ -25,16 +25,17 @@ function rand(min, max) { return Math.random() * (max - min) + min; }
 
 function initLights() {
   lights = [];
-  const count = Math.floor(innerWidth / 60);
+  const count = Math.floor(innerWidth / 80);
   for (let i = 0; i < count; i++) {
     lights.push({
       x: rand(0, innerWidth),
       y: rand(0, innerHeight),
-      r: rand(10, 45),
-      a: rand(0.08, 0.35),
-      vx: rand(-0.15, 0.15),
-      vy: rand(-0.1, 0.1),
-      hue: rand(0, 360),
+      r: rand(15, 60),
+      baseR: 0,
+      a: rand(0.03, 0.15),
+      vx: rand(-0.05, 0.05),
+      vy: rand(-0.03, 0.03),
+      hue: rand(5, 20), // Тёплый золотисто-бордовый диапазон
       pulse: rand(0, Math.PI * 2)
     });
   }
@@ -43,26 +44,26 @@ function initLights() {
 function draw() {
   if (!ctx) return;
 
-  ctx.fillStyle = 'rgba(0,0,0,0.15)';
+  // лёгкое затемнение без следов
+  ctx.fillStyle = 'rgba(0,0,0,0.25)';
   ctx.fillRect(0, 0, innerWidth, innerHeight);
 
   for (const l of lights) {
     l.x += l.vx;
     l.y += l.vy;
-    l.pulse += 0.02;
+    l.pulse += 0.01;
 
-    // бесконечный поток
-    if (l.x < -120) l.x = innerWidth + 120;
-    if (l.x > innerWidth + 120) l.x = -120;
-    if (l.y < -120) l.y = innerHeight + 120;
-    if (l.y > innerHeight + 120) l.y = -120;
+    if (l.x < -80) l.x = innerWidth + 80;
+    if (l.x > innerWidth + 80) l.x = -80;
+    if (l.y < -80) l.y = innerHeight + 80;
+    if (l.y > innerHeight + 80) l.y = -80;
 
-    const pulseScale = 1 + Math.sin(l.pulse) * 0.2;
-    const alpha = l.a * (0.7 + Math.sin(l.pulse * 0.8) * 0.3);
+    const pulseScale = 1 + Math.sin(l.pulse) * 0.05;
+    const alpha = l.a * (0.8 + Math.sin(l.pulse * 0.5) * 0.2);
 
     const g = ctx.createRadialGradient(l.x, l.y, 0, l.x, l.y, l.r * pulseScale);
-    g.addColorStop(0, `hsla(${l.hue}, 70%, 70%, ${alpha})`);
-    g.addColorStop(0.3, `hsla(${l.hue}, 60%, 50%, ${alpha * 0.5})`);
+    g.addColorStop(0, `hsla(${l.hue}, 60%, 70%, ${alpha})`);
+    g.addColorStop(0.3, `hsla(${l.hue}, 70%, 55%, ${alpha * 0.3})`);
     g.addColorStop(1, 'rgba(0,0,0,0)');
 
     ctx.fillStyle = g;
@@ -77,7 +78,7 @@ function draw() {
 initLights();
 draw();
 
-/* === Logo glow on scroll & breathing === */
+/* === Logo glow on scroll + subtle breathing === */
 function logoGlowOnScroll() {
   const logos = document.querySelectorAll('.logo-wrap img');
   if (!logos.length) return;
@@ -90,12 +91,12 @@ function logoGlowOnScroll() {
     });
   });
 
-  // эффект "дыхания" — лёгкое пульсирующее свечение
+  // мягкое дыхание — еле заметное свечение
   setInterval(() => {
     logos.forEach(img => {
-      img.style.filter = `drop-shadow(0 0 ${rand(3, 6)}px rgba(216,159,143,${rand(0.4, 0.7)}))`;
+      img.style.filter = `drop-shadow(0 0 ${rand(2, 4)}px rgba(216,159,143,${rand(0.25, 0.45)}))`;
     });
-  }, 1200);
+  }, 1500);
 }
 
 logoGlowOnScroll();
