@@ -65,14 +65,20 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       const head = catEl.querySelector('.cat-head');
       const itemsDiv = catEl.querySelector('.items');
+
+      // === Раскрытие категории ===
       head.addEventListener('click', () => {
-        const open = itemsDiv.classList.contains('open');
+        const open = catEl.classList.toggle('open');
+        const chev = head.querySelector('.chev');
+        chev.style.transform = open ? 'rotate(90deg)' : 'rotate(0deg)';
         if (open) {
-          itemsDiv.classList.remove('open');
-          itemsDiv.style.maxHeight = '0';
-        } else {
-          itemsDiv.classList.add('open');
           itemsDiv.style.maxHeight = itemsDiv.scrollHeight + 'px';
+          setTimeout(() => (itemsDiv.style.maxHeight = 'none'), 400); // потом снимаем ограничение
+        } else {
+          itemsDiv.style.maxHeight = itemsDiv.scrollHeight + 'px';
+          requestAnimationFrame(() => {
+            itemsDiv.style.maxHeight = '0';
+          });
         }
       });
 
@@ -98,9 +104,14 @@ document.addEventListener('DOMContentLoaded', async () => {
             photo.style.marginTop = '0';
           } else {
             photo.classList.add('open');
-            photo.style.maxHeight = '800px';
+            photo.style.maxHeight = '400px';
             photo.style.opacity = '1';
-            photo.style.marginTop = '8px';
+            photo.style.marginTop = '10px';
+
+            // автопрокрутка к открытому фото
+            setTimeout(() => {
+              photo.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 300);
           }
         });
       });
