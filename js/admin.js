@@ -249,49 +249,6 @@ document.getElementById('add-item').addEventListener('click', async () => {
   loadAll();
 });
 
-/* ====== Персонал ====== */
-function renderStaffList(staff) {
-  const el = document.getElementById('staff-list'); el.innerHTML = '';
-  staff.forEach((s, idx) => {
-    const r = document.createElement('div'); r.className = 'form-row';
-    r.innerHTML = `<input value="${s.name}"><input value="${s.role}"><input value="${s.photo || ''}">
-                   <button class="btn" data-i="${idx}">Сохранить</button>
-                   <button class="btn danger" data-del="${idx}">Удалить</button>`;
-    el.appendChild(r);
-
-    r.querySelector('[data-i]').addEventListener('click', async (e) => {
-      const i = e.target.dataset.i;
-      const nm = r.querySelectorAll('input')[0].value.trim();
-      const rl = r.querySelectorAll('input')[1].value.trim();
-      const ph = r.querySelectorAll('input')[2].value.trim();
-      staff[i].name = nm; staff[i].role = rl; staff[i].photo = ph;
-      localStorage.setItem('garem_staff', JSON.stringify(staff));
-      await saveJson(JSONBIN_STAFF_ID, staff);
-      loadAll();
-    });
-
-    r.querySelector('[data-del]').addEventListener('click', async (e) => {
-      if (!confirm('Удалить сотрудника?')) return;
-      staff.splice(idx, 1);
-      localStorage.setItem('garem_staff', JSON.stringify(staff));
-      await saveJson(JSONBIN_STAFF_ID, staff);
-      loadAll();
-    });
-  });
-}
-
-document.getElementById('add-staff').addEventListener('click', async () => {
-  const name = document.getElementById('staff-name').value.trim();
-  const role = document.getElementById('staff-role').value.trim();
-  const photo = document.getElementById('staff-photo').value.trim();
-  if (!name) return alert('Введите имя');
-  const staff = JSON.parse(localStorage.getItem('garem_staff')) || [];
-  staff.push({ id: 's' + Date.now(), name, role, photo });
-  localStorage.setItem('garem_staff', JSON.stringify(staff));
-  await saveJson(JSONBIN_STAFF_ID, staff);
-  loadAll();
-});
-
 /* ====== Пароли ====== */
 document.getElementById('save-admin-pass').addEventListener('click', () => {
   if (currentRole !== 'admin') return alert('Только админ может менять пароли');
