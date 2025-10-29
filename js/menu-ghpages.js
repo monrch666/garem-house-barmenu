@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             photo.style.marginTop = '0';
           } else {
             photo.classList.add('open');
-            photo.style.maxHeight = '300px';
+            photo.style.maxHeight = '800px';
             photo.style.opacity = '1';
             photo.style.marginTop = '8px';
           }
