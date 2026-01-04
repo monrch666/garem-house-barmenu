@@ -10,7 +10,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     } catch (e) {
       console.error('Ошибка загрузки меню:', e);
       return {
-        {
  		 "Коктейли": [
           { "name": "Мохито", "price": "500₽", "photo": "https://via.placeholder.com/400x300?text=Mojito", "active": true },
           { "name": "Пина Колада", "price": "550₽", "photo": "https://via.placeholder.com/400x300?text=Pina+Colada", "active": true }
