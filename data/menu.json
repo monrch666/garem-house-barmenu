@@ -187,7 +187,7 @@
       "price": "600",
       "photo": "https://sun9-10.userapi.com/s/v1/ig2/U6rICXJooQMdAJEn8usyp5JFKIKdW3thGdBFjKv0r-P2vRACP2YrZSqrsWU4IzHusp_XFUh8AZS57dMzOXd0aoPj.jpg?quality=95&as=32x43,48x64,72x96,108x144,160x213,240x320,360x480,480x640,540x720,640x853,720x960,1080x1440,1280x1707,1440x1920,1920x2560&from=bu&cs=1280x0",
       "active": true
-    }
+    },
 	{
       "name": "Хофброй",
       "price": "800",
@@ -291,4 +291,5 @@
       "active": true
     }
   ]
+
 }
